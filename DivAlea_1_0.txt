@@ -1,0 +1,31 @@
+#Numero de lineas del archivo 
+LINES=$(cat sentences_RI_RIGCeditado.txt| wc -l)
+#Numero de lineas del 70 porciento
+Porcentaje=$(cat sentences_RI_RIGCeditado.txt| wc -l|perl -nae'print int($_*7*.1)')
+#Asignar valor inicial a i para el ciclo while 
+i=1
+
+TLINES=$LINES
+#Crea un archivo en el que iremos agregando lineas
+touch Lines70_sentences_RI_RIGCeditado.txt 
+
+while [ "$i" -le "$Porcentaje" ];do 
+
+#Creamos un valor aleatorio
+LINE=$(($RANDOM % TLINES+1))
+#Asignamos a Var el valor obtenido del grep que en caso de aparecer una linea ya insertada el grep devuelve 1
+# -w le indica que tome la cadena como tal sin contar las subcadenas -c nos dice cuantas veces coincide el patron de busqueda en el archivo 
+Var=$(grep -wc ^$LINE Lines70_sentences_RI_RIGCeditado.txt)
+#Si la linea no se encuentra agrega la linea e incrementa en 1
+if [ "$Var" = 0 ];then
+	sed -n "${LINE}p" sentences_RI_RIGCeditado.txt>>Lines70_sentences_RI_RIGCeditado.txt;
+	i=$(cat Lines70_sentences_RI_RIGCeditado.txt|wc -l) 	
+fi 
+done
+
+
+
+#Hacer un:
+less ArchivoLines70.txt 
+wc -l ArchivoLines70.txt
+cut -f1 ArchivoLines70.txt|sort|uniq -c
