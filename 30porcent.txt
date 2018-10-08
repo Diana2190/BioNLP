@@ -1,0 +1,18 @@
+#ordena por la columna 1 de manera numerica 
+sort -nk1 Nuevo.txt > Nuevo_ord_num.txt
+
+#v es para los mistmatches
+grep -v -f  Nuevo_ord_num.txt  sentences_RI_RIGCedi_ordenado.txt
+
+#también intenté con diff
+diff -ab sentences_RI_RIGCeditado.txt  Nuevo_ord_num.txt > difer3.txt
+#aquí me salen líneas con los intervalos donde hubo diferencias, estaba intentando quitarlos
+ con expresiones regulares
+ 
+  sed '/^[(\d+).\w+(\d+)*$]/d' difer3.txt
+#la d es para delete
+
+
+open(sentences, )
+my @archivo=<STDIN> ;
+
